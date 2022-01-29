@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Form from './components/Form';
 import { baseURL, toCorrectDate, toCorrectTime } from './lib/helpers';
-import ConnectionList from './components/ConnectionList';
+import axios from 'axios';
 import Title from './components/Title';
+import Form from './components/Form';
+import ConnectionList from './components/ConnectionList';
 
 const App = () => {
   // States
@@ -26,6 +26,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Get Connections from input
   const handleSubmit = async (from, to, date, time) => {
     setError(false);
     if (from && to) {
@@ -45,16 +46,18 @@ const App = () => {
 
   return (
     <>
-      <div className='xl:container mx-auto min-h-full bg-pink-100'>
-        <div className='grid grid-cols-4 gap-3'>
-          <aside className='col-span-1  text-blue-600 border-r border-pink-200 min-h-screen'>
-            <Title text='Bereken je route' />
-            <Form handleSubmit={handleSubmit} stations={stations} loading={loading} error={error} />
-          </aside>
-          <main className='col-span-3'>
-            <Title text='Routes' />
-            <ConnectionList connections={connections} />
-          </main>
+      <div className='bg-pink-200'>
+        <div className='xl:container mx-auto min-h-full bg-pink-100 shadow-2xl'>
+          <div className='grid grid-cols-4 gap-3'>
+            <aside className='col-span-1  text-blue-600 border-r border-pink-200 min-h-screen'>
+              <Title text='Bereken je route' />
+              <Form handleSubmit={handleSubmit} stations={stations} loading={loading} error={error} />
+            </aside>
+            <main className='col-span-3'>
+              <Title text='Routes' />
+              <ConnectionList connections={connections} />
+            </main>
+          </div>
         </div>
       </div>
     </>
