@@ -47,7 +47,7 @@ const App = () => {
   return (
     <>
       <div className='bg-pink-200'>
-        <div className='xl:container mx-auto min-h-full bg-pink-100 shadow-2xl'>
+        <div className='xl:container mx-auto min-h-full bg-pink-100 shadow-2xl font-body'>
           <div className='grid grid-cols-4 gap-3'>
             <aside className='col-span-1  text-blue-600 border-r border-pink-200 min-h-screen'>
               <Title text='Bereken je route' />

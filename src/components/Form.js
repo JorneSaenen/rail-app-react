@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { dateNow, timeNow, filtered } from '../lib/helpers';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 const Form = ({ handleSubmit, stations, loading, error }) => {
   const [date, setDate] = useState(dateNow);
@@ -50,7 +51,9 @@ const Form = ({ handleSubmit, stations, loading, error }) => {
           type='submit'
           data-mdb-ripple='true'
           data-mdb-ripple-color='light'
-          className={`inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-3`}
+          className={`inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mt-3 ${
+            loading ? 'cursor-progress' : null
+          }`}
         >
           {loading ? (
             <div className='flex justify-center items-center'>
@@ -59,7 +62,10 @@ const Form = ({ handleSubmit, stations, loading, error }) => {
               </div>
             </div>
           ) : (
-            'Zoeken'
+            <div className='flex gap-2 justify-center items-center text-[16px]'>
+              Zoeken
+              <AiOutlineSearch />
+            </div>
           )}
         </button>
         {error && <p className='text-red-500 pt-3'>Geen verbindingen gevonden</p>}
