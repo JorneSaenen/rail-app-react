@@ -1,7 +1,6 @@
 import { BsInfoCircle } from 'react-icons/bs';
 
-const ConnectionDetail = ({ connection, id }) => {
-  console.log(connection);
+const ConnectionDetail = ({ connection }) => {
   return (
     <div className='mt-9 border-dashed border-b-2 border-blue-400 pb-5'>
       <ol className='sm:flex'>
@@ -36,13 +35,13 @@ const ConnectionDetail = ({ connection, id }) => {
             {connection.departure.stops && (
               <ul className='mt-2 mb-2 text-gray-500'>
                 {connection.departure.stops.stop.map((stop) => (
-                  <>
+                  <div key={stop.id}>
                     <li className='font-semibold'>
                       Tussenstop {+stop.id + 1}: {stop.station}
                     </li>
                     <li className='pl-2 text-gray-800'>Aankomststijd: {new Date(+stop.scheduledArrivalTime * 1000).toLocaleTimeString()}</li>
                     <li className='pl-2 text-gray-800 pb-2'>Vertrektijk: {new Date(+stop.scheduledDepartureTime * 1000).toLocaleTimeString()}</li>
-                  </>
+                  </div>
                 ))}
               </ul>
             )}
@@ -53,7 +52,9 @@ const ConnectionDetail = ({ connection, id }) => {
                   <BsInfoCircle /> Extra info:
                 </p>
                 {connection.alerts.alert.map((alert) => (
-                  <li className='text-red-500 pb-3 text-md'>{alert.description}</li>
+                  <li key={alert.id} className='text-red-500 pb-3 text-md'>
+                    {alert.description}
+                  </li>
                 ))}
               </ul>
             )}

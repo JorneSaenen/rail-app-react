@@ -3,11 +3,13 @@ import { dateNow, timeNow, filtered } from '../lib/helpers';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 const Form = ({ handleSubmit, stations, loading, error }) => {
-  const [date, setDate] = useState(dateNow);
+  // States
+  const [date, setDate] = useState(dateNow());
   const [time, setTime] = useState(timeNow);
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
+  // Filters
   const stationNames = stations.map((station) => station.name.split(' ').join('-'));
   const filteredFromSearch = filtered(stationNames, from);
   const filteredToSearch = filtered(stationNames, to);
