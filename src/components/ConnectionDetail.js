@@ -1,3 +1,5 @@
+import { BsInfoCircle } from 'react-icons/bs';
+
 const ConnectionDetail = ({ connection, id }) => {
   console.log(connection);
   return (
@@ -47,7 +49,9 @@ const ConnectionDetail = ({ connection, id }) => {
             <hr />
             {connection.departure.alerts && (
               <ul>
-                <p className='mb-1'>Extra info:</p>
+                <p className='mb-1 flex gap-2 items-center'>
+                  <BsInfoCircle /> Extra info:
+                </p>
                 {connection.alerts.alert.map((alert) => (
                   <li className='text-red-500 pb-3 text-md'>{alert.description}</li>
                 ))}
