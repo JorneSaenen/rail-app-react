@@ -4,7 +4,7 @@ const ConnectionList = ({ connections }) => {
   return (
     <>
       {connections.map((connection) => (
-        <ConnectionDetail connection={connection} key={connection.id} />
+        <ConnectionDetail connection={connection} key={connection.id} id={connection.id} />
       ))}
     </>
   );
