@@ -1,4 +1,4 @@
-const ErrorToast = () => {
+const Error = () => {
   return (
     <div className='bg-yellow-100 rounded-lg py-5 px-6 mb-3 text-base text-yellow-700 inline-flex items-center w-full' role='alert'>
       <svg
@@ -21,4 +21,4 @@ const ErrorToast = () => {
   );
 };
 
-export default ErrorToast;
+export default Error;
