@@ -3,26 +3,45 @@ import { baseURL, toCorrectDate, toCorrectTime } from './lib/helpers';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
-import Side from './components/Side';
 import Main from './components/Main';
+import Side from './components/Side';
+import LoadingMain from './components/LoadingMain';
+import Error from './components/Error';
 
 const App = () => {
   // States
   const [stations, setStations] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [connections, setConnections] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingMain, setLoadingMain] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorInitial, setErrorInitial] = useState(false);
   const [sideOpen, setSideOpen] = useState(false);
 
   // useEffect for fetching all stations on initial load
   useEffect(() => {
     const getAllStations = async () => {
+      setErrorInitial(false);
+      setLoadingMain(true);
       try {
         const stationsResp = await axios(`${baseURL}/stations/?format=json&lang=nl`);
         setStations(stationsResp.data.station);
       } catch (error) {
-        console.log(error);
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          setErrorInitial(true);
+        } else if (error.request) {
+          setErrorInitial(true);
+          console.log(error.request);
+        } else {
+          setErrorInitial(true);
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
       } finally {
+        setLoadingMain(false);
       }
     };
     getAllStations();
@@ -52,13 +71,20 @@ const App = () => {
     <>
       <div className='bg-pink-200'>
         <div className='xl:container mx-auto min-h-full bg-pink-100 shadow-2xl font-body relative'>
-          <div onClick={() => setSideOpen(!sideOpen)} className='text-2xl absolute left-3 top-3 cursor-pointer md:hidden z-[60]'>
-            {sideOpen ? <AiOutlineCloseCircle /> : <GiHamburgerMenu />}
-          </div>
-          <div className='grid grid-cols-4 md:gap-3'>
-            <Side handleSubmit={handleSubmit} stations={stations} loading={loading} error={error} sideOpen={sideOpen} />
-            <Main connections={connections} />
-          </div>
+          {errorInitial && <Error />}
+          {loadingMain ? (
+            <LoadingMain />
+          ) : (
+            <>
+              <div onClick={() => setSideOpen(!sideOpen)} className='text-2xl absolute left-3 top-3 cursor-pointer md:hidden z-[60]'>
+                {sideOpen ? <AiOutlineCloseCircle /> : <GiHamburgerMenu />}
+              </div>
+              <div className='grid grid-cols-4 md:gap-3'>
+                <Side handleSubmit={handleSubmit} stations={stations} loading={loading} error={error} sideOpen={sideOpen} />
+                <Main connections={connections} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
